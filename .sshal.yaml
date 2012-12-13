@@ -1,0 +1,14 @@
+dialog:
+    backtitle: "ssh launcher"
+    title: "trusted hosts"
+
+hosts:
+    host1:
+        comment: "host1 comment"
+        user: root
+        host: host1.mydomain.ext
+    host2:
+        comment: "host2 comment"
+        user: root
+        host: host2.mydomain.ext
+    
