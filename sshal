@@ -15,9 +15,11 @@ def writer(message):
 
 def usage(prog_name):
     writer('Usage:\n')
-    writer('\t* {t.cyan}'.format(t=t) + prog_name + ' {t.normal}'.format(t=t) + '\t\t- open dialog box with host selection\n')
-    writer('\t* {t.cyan}'.format(t=t) + prog_name + ' {t.normal} hostname'.format(t=t) + '\t- connect to host via ssh\n')
-    writer('\t* {t.cyan}'.format(t=t) + prog_name + ' {t.normal} hostlist'.format(t=t) + '\t- return the host list (usefull for zsh completion\n')
+    writer('{t.yellow}\t* {t.cyan}'.format(t=t) + prog_name + ' {t.normal}'.format(t=t) + '\t\t\t\t- open dialog box with host selection\n')
+    writer('{t.yellow}\t* {t.cyan}'.format(t=t) + prog_name + ' {t.normal} hostname'.format(t=t) + '\t\t- connect to host via ssh\n')
+    writer('{t.yellow}\t* {t.cyan}'.format(t=t) + prog_name + ' {t.normal} hostlist'.format(t=t) + '\t\t- return the host list (usefull for zsh completion\n')
+    writer('{t.yellow}\t* {t.cyan}'.format(t=t) + prog_name + ' {t.normal} pull hostname src dst'.format(t=t) + '\t- copy file from hostname src into dst\n')
+    writer('{t.yellow}\t* {t.cyan}'.format(t=t) + prog_name + ' {t.normal} push hostname src dst'.format(t=t) + '\t- copy file from src to hostname dst\n')
 
 def handle_dialog_exit_code(d, code):
     # d is supposed to be a Dialog instance
@@ -32,6 +34,7 @@ def handle_dialog_exit_code(d, code):
         # DIALOG_ERROR is propagated as an exception and caught in main().
         # So we only need to handle OK here.
         if d.yesno(msg) == d.DIALOG_OK:
+            subprocess.call('clear', shell=True)
             sys.exit(0)
         return 0
     else:
@@ -75,6 +78,15 @@ def return_host_list(host_configuration):
         hostlist = hostlist + ' ' + host
     return hostlist
 
+def push_file_to_host(args):
+    pass
+
+def pull_file_to_host(args):
+    pass
+
+def exec_only_command(args):
+    pass
+
 def main():
     try:
         # Configuration loading
@@ -88,6 +100,12 @@ def main():
                 usage(sys.argv[0])
             elif sys.argv[1] == 'hostlist':
                 print return_host_list(configuration['hosts'])
+            elif sys.argv[1] == 'pull':
+                pull_file_from_host(sys.argv)
+            elif sys.argv[1] == 'push':
+                push_file_to_host(sys.argv)
+            elif sys.argv[1] == 'cmd':
+                exec_only_command(sys.argv)
             else:
                 launch_ssh_host(configuration, sys.argv[1])
 
