@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-
 #  SSH Utility Launcher (Aka sshal) 2012/12/13 15:36 bigo Exp $
 #
 #  This program is free software; you can redistribute it and/or modify
